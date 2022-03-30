@@ -33,6 +33,7 @@ using namespace std;
 #include "include/ise102.h"
 #include "include/constants.h"
 #include "include/handy_functions.h"
+#include "include/blacksmith.h"
 
 // Show a pretty box surrounding the name of this game and maybe a blurb
 // or subtitle.
@@ -42,21 +43,20 @@ void displayTitleAndIntro()
     // TODO: Replace the game name with something of your own choosing. Improve
     // the look of the Title here, don't leave it as the ### mess I created.
 
-    cout << "######### DUNGEONS OF GIGGLEBERRY ##########\n";
     std::cout
             << "   ______                    ______                   " << "\n"
             << "  / ____/___ __   _____     / ____/___ _____ ___  ___ " << "\n"
             << " / /   / __ `/ | / / _ \\   / / __/ __ `/ __ `__ \\/ _ \\" << "\n"
             << "/ /___/ /_/ /| |/ /  __/  / /_/ / /_/ / / / / / /  __/" << "\n"
             << "\\____/\\__,_/ |___/\\___/   \\____/\\__,_/_/ /_/ /_/\\___/ " << "\n";
-    cout << "\n\n";
+    std::cout << "\n";
 
-    cout << "  Chapter 84 of the chronicles of Gorlanda \n";
-    cout << "############################################\n\n\n";
-    cout << "You wake up in a stone corridor, clearly underground and no longer in the forest you were so recently strolling through. A few feet away stands what appears to be - if cartoons are accurate - a thigh-high RED TROLL, maybe ";
-    // TODO: This was made for U.S. audiences. Update it to metric (cms) by calling
-    // one of the functions in handy_functions.h
-    cout << TROLL_HEIGHT_INCHES << " inches tall.\n\n";
+    cout << "Chapter 1: Trapped!\n";
+    cout << "\n\n";
+    cout
+        << "You wake up in a stone corridor, clearly underground and no longer in the forest you were so recently strolling through. A few feet away stands what appears to be - if cartoons are accurate - a thigh-high RED TROLL, maybe "
+        << inchesToCms(TROLL_HEIGHT_INCHES)
+        << " centimeters tall.\n\n";
 }
 
 // The troll directs the player to the mines to retrieve ore.
@@ -67,7 +67,7 @@ bool surviveTrollEncounter(bool already_met)
     // If first encounter, troll introduces self, gives quest
     if (already_met == false)
     {
-        cout << "G'day human.You need to make a SILVER KEY to escape. Take this EXCELLENT PICKAXE and head to the mines. Come back when you have some ORE OF SILVER.\n\n";
+        cout << "G'day human. You need to make a SILVER KEY to escape. Take this EXCELLENT PICKAXE and head to the mines. Come back when you have some ORE OF SILVER.\n\n";
     }
 
     else
@@ -79,7 +79,7 @@ bool surviveTrollEncounter(bool already_met)
     string choice = getPlayerChoice("SPIT", "MINE");
 
     // end the function and return true if they mine
-    if (choice == "MIME") return true;
+    if (choice == "MINE") return true;
     // if it hasn't ended, you spat.. uh oh
     cout << "\nThe troll, you discover, is awfully savage for her height.\n\n";
     return false;
@@ -137,17 +137,18 @@ Progress mineForSilver()
 
 int main() {
     srand(time(0));
-    // TODO: Students - add game save option? Would have to be able to choose
+    // TODO: Add game save option. Would have to be able to choose
     // to continue or start over on load.
-    Progress game_progress = Progress::NO_PROGRESS;
+    // TODO: Set game progress to NO_PROGRESS by default.
+    Progress game_progress = Progress::HAVE_FORGED_KEY;
     clearScreen();
     displayTitleAndIntro();
 
     // As long as the player hasn't found silver ore,
     // keep meeting troll, who sends you to mine for silver
+
     bool met_troll = false;
-    while (game_progress != Progress::HAVE_SILVER_ORE)
-    {
+    while (game_progress < Progress::HAVE_SILVER_ORE) {
         if (surviveTrollEncounter(met_troll))
         {
             met_troll = true;
@@ -163,17 +164,26 @@ int main() {
         }
     }
 
-    // TODO: encounter another creature, who tells you were to get
-    // your silver forged into a key
+    if (game_progress < Progress::FOUND_BLACKSMITH) {
+        cout << "Having found the SILVER ORE, the troll directs you to a small room.\n\n";
+        delay(1500);
+        cout
+            << "CREATURE:\n Hello traveller! You must be the one the MINE TROLL was talking about.\n"
+            << " I understand you are in need of a SILVER KEY.\n"
+            << " Follow these directions, and you will encounter THE BLACKSMITH. She will forge you a SILVER KEY.\n\n";
+    }
+    // TODO: Create a minigame to get to the blacksmith.
 
-    // while game_progress != have forged key, maybe?
-    // TODO: Send the player to the forge, where they must tell the blacksmith a
-    // funny name. the blacksmith is very particular though: she only wants a name made up   // of three words, and it has to be exactly 20 characters long, including spaces.
-    // "Jasmine Bee Flettles" would work, but "Bonno Bingoparaloop" wouldn't, nor would
-    // "Minh Gyu Lee" because it's too short.
+    bool met_blacksmith = false;
+    while (game_progress < Progress::HAVE_FORGED_KEY) {
+            game_progress = blacksmithMiniGame(met_blacksmith);
+            met_blacksmith = true;
+    }
 
     // TODO: leaving the forge, you see an enormous, ANCIENT STONE DOOR. A sculpted face in
     // the surface speaks and tells you he prefers keys with rubys in. He sends you to..
+
+
 
     // TODO: The Fairy's Gambit. Here you can engage in a challenge to get a red gem.
     // If it turns out to be a ruby (look at handy_functions) and not some other red gem,
@@ -184,7 +194,6 @@ int main() {
     // TODO: You return to the door with the Ruby now set in the key. He graciously opens,
     // and lets you out into the forest you left so vertically earlier. Sourly, you realise
     // you didn't actually use the key to open the door.
-    cout << "You walk up to the ancient stone door, who sighs and lets you\
-    out. \"GREAT JOB\" he says, definitely not meaning it.\n";
+    cout << "You walk up to the ancient stone door, who sighs and lets you out. \"GREAT JOB\" he says, definitely not meaning it.\n";
     cout << "++ Game over ++ \n\n";
 }

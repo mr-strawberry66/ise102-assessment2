@@ -13,6 +13,7 @@
 enum Progress {
     NO_PROGRESS,
     HAVE_SILVER_ORE,
+    FOUND_BLACKSMITH,
     HAVE_FORGED_KEY,
     HAVE_RUBY,
     HAVE_GEMMED_KEY,

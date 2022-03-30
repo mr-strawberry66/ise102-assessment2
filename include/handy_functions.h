@@ -3,13 +3,22 @@
 #include <cstdlib>
 #include <cmath>
 #include <string>
+#include <algorithm>
+#include <vector>
+
 #include "constants.h"
 #include "ise102.h"
-using namespace std;
 
-using std::string;
-// Takes in a minimum number (int) and a maximum number (int), returns a random
-// number between the min and max (inclusive)
+
+/* Generate a random number betweena a minimum and a maximum (inclusive) value.
+ *
+ * Params:
+ *   min: int - the lowest value to generate.
+ *   max: int - the highest value to generate.
+ *
+ * Returns:
+ *  int - a random number between min and max.
+*/
 int randomInRange(int min, int max)
 {
     int difference = max - min;
@@ -18,34 +27,153 @@ int randomInRange(int min, int max)
     return rand_in_range;
 }
 
-// Prompts player to go with one of the available options
-string getPlayerChoice(string choiceA, string choiceB)
+
+/* Take a string and return it as upper case.
+ *
+ * Params:
+ *   input: std::string - The string to be converted to upper case.
+ *
+ * Returns: std::string
+ *   The input string converted to upper case.
+*/
+std::string toUpperCase(std::string input)
 {
-    string choice = "";
-    // TODO: Add a loop here so the player is asked for their choice until they
-    // enter one of the two. If they don't, they see an error and have to input again.
-    cout << "Enter your choice, " << choiceA << " or " << choiceB << "\n";
-    cout << " > ";
-    // print("Enter your choice, {0} or {1}\n", choiceA, choiceB);
-    cin >> choice;
-    return choice;
+    transform(input.begin(), input.end(), input.begin(), ::toupper);
+    return input;
 }
 
-// Converts US/Imperial inches to metric (Système Internationale) cms.
+
+/* Create a prompt for the player to enter one of two choices.
+ *
+ * If the player's choice is not one of the two choices, the prompt will
+ * be repeated until the player enters one of the two choices.
+ *
+ * Params:
+ *  choiceA: std::string - The first choice the player can make.
+ *  choiceB: std::string - The second choice the player can make.
+ *
+ * Returns: std::string
+ *  The player's choice as uppercase.
+*/
+std::string getPlayerChoice(std::string choiceA, std::string choiceB)
+{
+    std::string choice = "";
+    const std::vector<std::string> CHOICES = {
+        choiceA,
+        choiceB,
+    };
+
+    while (true)
+    {
+        std::cout << "Enter your choice, " << choiceA << " or " << choiceB << "\n";
+        std::cout << " > ";
+        std::cin >> choice;
+
+        choice = toUpperCase(choice);
+
+        // Search the CHOICES vector for the player's choice.
+        bool valid_choice = std::find(CHOICES.begin(), CHOICES.end(), choice) != CHOICES.end();
+
+        if (valid_choice) return choice;
+
+        std::cout << choice << " is not a valid choice.\n\n";
+    }
+}
+
+
+/* Convert imperial inches to metric centimeters.
+ *
+ * Params:
+ *   inches: int - The number of inches to convert.
+ *
+ * Returns: int
+ *   The number of inches converted to centimeters.
+*/
 int inchesToCms(int inches)
 {
-    // TODO: Check if this works. Fix it if it doesn't (google inches to cms)
     int cms = inches * 2.54f;
     return cms;
 }
 
-// Identifies a red gem's type given values for mohs_hardness and specific_gravity.
-// Returns a constant from the enum `RedGem` in constants.h
-// Data source: https://www.mymathtables.com/calculator/others/precise-gemstone-carat-weight-calculator.html
+
+/*  Identify a red gem's type based on the gem's hardness in mohs scale and the gem's specific gravity.
+ *
+ * If no match is found, return UNIDENTIFIED_RED_GEM.
+ *
+ * Gems are identified using values provided from
+ * https://www.mymathtables.com/calculator/others/precise-gemstone-carat-weight-calculator.html
+ *
+ * Params:
+ *   mohs_hardness: int - The gem's hardness in mohs scale.
+ *   specific_gravity: float - The gem's specific gravity.
+ *
+ * Returns: RedGem
+ *   The type of gem.
+*/
 RedGem getRedGemKind(float mohs_hardness, float specific_gravity)
+// TODO: Test this function works.
 {
-    // TODO: check if the provided values match known values/ranges in
-    // https://www.mymathtables.com/calculator/others/precise-gemstone-carat-weight-calculator.html to identify the type.
-    // For now, here's a dummy return value so the program compiles.
-    return RedGem::UNIDENTIFIED_RED_GEM;
+    if (
+        specific_gravity >= 3.50
+        && specific_gravity <= 4.30
+        && mohs_hardness >= 6.5
+        && mohs_hardness <= 7.5
+    ) return RedGem::GARNET;
+
+    else if (
+        specific_gravity >= 3.96
+        && specific_gravity <= 4.05
+        && mohs_hardness == 9.0
+    ) return RedGem::RUBY;
+
+    else if (
+        specific_gravity >= 3.03
+        && specific_gravity <= 3.25
+        && mohs_hardness >= 7.0
+        && mohs_hardness <= 7.5
+    ) return RedGem::TOURMALINE;
+
+    else if (
+        specific_gravity >= 3.50
+        && specific_gravity <= 4.30
+        && mohs_hardness >= 6.5
+        && mohs_hardness <= 7.5
+    ) return RedGem::RHODOLITE;
+
+    else if (
+        specific_gravity >= 3.58
+        && specific_gravity <= 4.06
+        && mohs_hardness == 8.0
+    ) return RedGem::SPINEL;
+
+    else return RedGem::UNIDENTIFIED_RED_GEM;
+}
+
+
+/* Count the number of words in a string counting by spaces.
+ *
+ * Params:
+ *   input: std::string - The string to count the words in.
+ *
+ * Returns: int
+ *   The number of words in the string.
+*/
+int countWordsInString(std::string input)
+{
+    int word_count = 0;
+    bool in_word = false;
+
+    // Itterate over each character in the string
+    // if the character is a space, we are not in a word.
+    // else, we are in a word and should increment the word count.
+    for (char c : input) {
+        if (c == ' ') {
+            in_word = false;
+        } else if (!in_word) {
+            word_count ++;
+            in_word = true;
+        }
+    }
+
+    return word_count;
 }

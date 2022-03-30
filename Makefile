@@ -10,3 +10,7 @@ main: $(OBJS)
 
 clean:
 	rm -f $(OBJS) main
+
+build:
+	g++ -std=c++17 main.cpp
+	./a.out
