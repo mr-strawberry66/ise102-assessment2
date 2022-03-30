@@ -33,7 +33,9 @@ using namespace std;
 #include "include/ise102.h"
 #include "include/constants.h"
 #include "include/handy_functions.h"
-#include "include/blacksmith.h"
+#include "include/minigames/ancient_door.h"
+#include "include/minigames/blacksmith.h"
+#include "include/minigames/fairy.h"
 
 // Show a pretty box surrounding the name of this game and maybe a blurb
 // or subtitle.
@@ -65,13 +67,11 @@ bool surviveTrollEncounter(bool already_met)
 {
     cout << "MINE TROLL: \n ";
     // If first encounter, troll introduces self, gives quest
-    if (already_met == false)
-    {
+    if (already_met == false) {
         cout << "G'day human. You need to make a SILVER KEY to escape. Take this EXCELLENT PICKAXE and head to the mines. Come back when you have some ORE OF SILVER.\n\n";
     }
 
-    else
-    {
+    else {
         cout << "What are you doing back out here? No silver, no key!\n\n";
     }
     // Give the player a choice..
@@ -97,7 +97,7 @@ Progress getSilverMiningOutcome()
     Progress silver_progress = Progress::NO_PROGRESS;
     int found = randomInRange(1,3);
     // Tell the player how they did, return their progress
-    if ( found == SILVER)
+    if (found == SILVER)
     {
         cout << "Hooray, you found SILVER ORE.\n\n";
         silver_progress = Progress::HAVE_SILVER_ORE;
@@ -149,15 +149,13 @@ int main() {
 
     bool met_troll = false;
     while (game_progress < Progress::HAVE_SILVER_ORE) {
-        if (surviveTrollEncounter(met_troll))
-        {
+        if (surviveTrollEncounter(met_troll)) {
             met_troll = true;
             // If you're successful, you'll pass the `while` condition!
             game_progress = mineForSilver();
         }
 
-        else
-        {
+        else {
             //displayGameOver(a message about troll attack);
             cout << ("++ Game over ++\n\n");
             return 0;
@@ -183,17 +181,27 @@ int main() {
     // TODO: leaving the forge, you see an enormous, ANCIENT STONE DOOR. A sculpted face in
     // the surface speaks and tells you he prefers keys with rubys in. He sends you to..
 
+    bool met_door = false;
+    bool met_fairy = false;
+    while (game_progress < Progress::HAVE_GEMMED_KEY) {
+        game_progress= speakWithDoor(met_door, game_progress);
+        met_door = true;
 
+        if (game_progress <= Progress::HAVE_RUBY) {
 
-    // TODO: The Fairy's Gambit. Here you can engage in a challenge to get a red gem.
-    // If it turns out to be a ruby (look at handy_functions) and not some other red gem,
-    // you can set it in the key. If not, you must stay and try again. (The challenge is up to
-    // you - it could be a game with a random draw like the silver mining, but something
-    // different would be worth more marks!)
-    //
+            std::cout << "\nYou follow the ANCIENT STONE DOOR's instructions, and head off in search of the fairy.\n\n";
+            delay(4000);
+            std::cout << "After a few minutes of searching...\n";
+            delay(2500);
+
+            game_progress = speakWithFairy(met_fairy);
+            met_fairy = true;
+        }
+    }
+
     // TODO: You return to the door with the Ruby now set in the key. He graciously opens,
     // and lets you out into the forest you left so vertically earlier. Sourly, you realise
     // you didn't actually use the key to open the door.
-    cout << "You walk up to the ancient stone door, who sighs and lets you out. \"GREAT JOB\" he says, definitely not meaning it.\n";
-    cout << "++ Game over ++ \n\n";
+
+    // game_progress = Progress::COMPLETED_GAME
 }

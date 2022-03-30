@@ -96,7 +96,7 @@ int inchesToCms(int inches)
 }
 
 
-/*  Identify a red gem's type based on the gem's hardness in mohs scale and the gem's specific gravity.
+/* Identify a red gem's type based on the gem's hardness in mohs scale and the gem's specific gravity.
  *
  * If no match is found, return UNIDENTIFIED_RED_GEM.
  *
@@ -147,6 +147,27 @@ RedGem getRedGemKind(float mohs_hardness, float specific_gravity)
     ) return RedGem::SPINEL;
 
     else return RedGem::UNIDENTIFIED_RED_GEM;
+}
+
+
+
+/* Return a RedGem's name by it's index in RedGem enum.
+ *
+ * Params:
+ *   index: int - The index of the RedGem in the enum.
+ *
+ * Returns: std::string
+ *   The name of the RedGem.
+*/
+std::string getRedGemNameByNumber(int index) {
+    switch(index) {
+        case 1: return "GARNET";
+        case 2: return "RUBY";
+        case 3: return "TOURMALINE";
+        case 4: return "RHODOLITE";
+        case 5: return "SPINEL";
+        default: return "UNIDENTIFIED_RED_GEM";
+    }
 }
 
 

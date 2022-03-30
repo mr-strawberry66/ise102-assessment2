@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "constants.h"
-#include "ise102.h"
+#include "../constants.h"
+#include "../ise102.h"
 
 
 /* Return a message to the player about the name they have provided.

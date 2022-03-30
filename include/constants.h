@@ -29,6 +29,7 @@ enum RedGem {
     RHODOLITE,
     SPINEL
 };
+
 // We'll talk about this one later
 enum TextStyle {
     TROLL = 0,
