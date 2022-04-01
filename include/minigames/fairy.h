@@ -14,7 +14,7 @@
  *   true if the player guesses correctly, false otherwise.
 */
 bool guessNumber() {
-    int number = rand() % 10 + 1;
+    int number = randomInRange(1, 10);
     int guess;
     int guess_count = 0;
     int guess_limit = 5;
@@ -60,7 +60,7 @@ bool guessNumber() {
  *   The RedGem that was taken.
 */
 RedGem take_gem() {
-    int gem_number = rand() % 5;
+    int gem_number = randomInRange(0, 5);
     std::cout << "You reach into the bag and feel a number of red gems.\n\n";
 
     RedGem gem = RedGem(gem_number);
@@ -171,7 +171,7 @@ Progress notMetFairyDialogue() {
         return playGame();
     }
 
-    cout << " That's a shame...\n\n";
+    std::cout << " That's a shame...\n\n";
 
     delay(3000);
 

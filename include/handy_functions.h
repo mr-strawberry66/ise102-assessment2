@@ -111,7 +111,6 @@ int inchesToCms(int inches)
  *   The type of gem.
 */
 RedGem getRedGemKind(float mohs_hardness, float specific_gravity)
-// TODO: Test this function works.
 {
     if (
         specific_gravity >= 3.50

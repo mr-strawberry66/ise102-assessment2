@@ -4,6 +4,27 @@
 #include "../ise102.h"
 
 
+/* Print an introduction to the Blacksmith.
+ *
+ * Returns: void
+*/
+void blacksmithIntroduction() {
+    std::cout << "Chapter 3: The Forge.\n\n\n";
+
+    delay(1500);
+
+    std::cout
+        << "As you approach the end of the tunnel, you see a large forge.\n"
+        << "The smell of smoke and metal fills the air.\n"
+        << "You approach the forge and see a BLACKSMITH working tirelessly over an anvil.\n";
+
+    delay(1500);
+
+    std::cout
+        << "As you walk up to the BLACKSMITH, she turns to face you.\n\n";
+}
+
+
 /* Return a message to the player about the name they have provided.
  *
  * Params:
@@ -77,9 +98,7 @@ Progress validateName(std::string name, int word_count) {
 */
 Progress blacksmithMiniGame(bool met_blacksmith) {
     if (!met_blacksmith) {
-        cout << "You've found THE BLACKSMITH!\n\n";
-
-        cout
+        std::cout
             << "THE BLACKSMITH:\n"
             << " Hello traveller! I am THE BLACKSMITH.\n"
             << " I can forge you a SILVER KEY, but in return, I require something from you.\n\n";
@@ -93,12 +112,37 @@ Progress blacksmithMiniGame(bool met_blacksmith) {
 
     std::string name = "";
 
-    std::cout << "Tell me a name.\n" << "> ";
-    std::getline(cin, name);
+    std::cout << "Tell me a name.\n" << " > ";
+    std::getline(std::cin, name);
 
     std::cout << "\n";
 
     int word_count = countWordsInString(name);
 
     return validateName(name, word_count);
+}
+
+
+/* Run the game loop for Chapter 3 of the game.
+ *
+ * This involves interractions with the Blacksmith.
+ *
+ * Params:
+ *   game_progress: Progress - The current progress of the game.
+ *
+ * Returns: Progress
+ *   The new progress of the game.
+*/
+Progress blacksmithGameLoop(Progress game_progress) {
+    if (game_progress < Progress::HAVE_FORGED_KEY) {
+        blacksmithIntroduction();
+    }
+
+    bool met_blacksmith = false;
+    while (game_progress < Progress::HAVE_FORGED_KEY) {
+        game_progress = blacksmithMiniGame(met_blacksmith);
+        met_blacksmith = true;
+    }
+
+    return game_progress;
 }
