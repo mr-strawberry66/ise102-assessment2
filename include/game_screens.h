@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "constants.h"
+#include "ise102.h"
 
 
 /* Display the game title screen.
@@ -32,6 +33,28 @@ void displayGameOver(std::string message) {
 }
 
 
+/* Display the game complete message at the end of the game.
+ *
+ * Returns: void
+*/
+void displayGameComplete() {
+    std::cout << "The door's face becomes inanimate as it slowly creaks open, revealing a winding staircase.\n\n";
+
+    std::cout << "As you traverse the mossy, derelict stairs, the structure slowly fades into a far more natural looking cave.\n\n";
+
+    delay(3000);
+
+    std::cout << "The smell of the the forest becomes apparent as you continue to ascend...\n\n";
+
+    delay(2000);
+
+    std::cout << "You see a bright light ahead of you...\n\n\n";
+
+    delay(3000);
+
+    std::cout << "++ Game complete ++\n\n";
+}
+
 /* Let the player decide which chapter to start from.
  *
  * This gives the player a pseudo save function.
@@ -46,8 +69,11 @@ Progress getPlayerProgress() {
         << "1. Chapter 1: Trapped!\n"
         << "2. Chapter 2: The Riddle.\n"
         << "3. Chapter 3: The Forge.\n"
+        << "4. Chapter 4: The Fairy.\n"
+        << "5. Chapter 5: The Escape.\n"
         << "> ";
 
+    std::ws(std::cin);
     std::getline(std::cin, str_choice);
 
     int choice = std::stoi(str_choice);
@@ -56,6 +82,8 @@ Progress getPlayerProgress() {
         case 1: return Progress::NO_PROGRESS;
         case 2: return Progress::HAVE_SILVER_ORE;
         case 3: return Progress::FOUND_BLACKSMITH;
+        case 4: return Progress::HAVE_FORGED_KEY;
+        case 5: return Progress::HAVE_RUBY;
         default: return Progress::NO_PROGRESS;
     }
 }

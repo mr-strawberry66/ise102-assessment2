@@ -1,103 +1,48 @@
 #include <iostream>
 #include <string>
+
 #include "../constants.h"
 #include "../ise102.h"
 
 
-/* Prints introductory dialogue about the ANCIENT STONE DOOR.
- *
- * Returns: Progress
- *   The player's progress through the game.
-*/
-Progress notMetDoorDialogue() {
-    std::cout << "As you leave the forge, you see an enormous, ANCIENT STONE DOOR. A sculpted face in the surface speaks.\n\n";
+class AncientStoneDoor : public Creature {
+    private:
+        /* Print an introduction to the Ancient Stone Door.
+         *
+         * Returns: void
+         */
+        void introduction() {
+            std::cout << "Chapter 5: The Escape.\n\n\n";
 
-    delay(2000);
+            delay(2000);
 
-    std::cout
-        << "ANCIENT STONE DOOR:\n"
-        << " Hello traveller, I see you are trying to return to the forest.\n";
+            std::cout
+                << "With a RUBY in hand, you leave the FAIRY, and return to the ANCIENT STONE DOOR.\n\n";
 
-    delay(3000);
+            delay(3000);
 
-    std::cout
-        << " I am afraid I cannot let you pass.\n"
-        << " The key you possess does not contain a RUBY!\n";
+            std::cout
+                << "ANCIENT STONE DOOR:\n"
+                << " Welcome back traveller. Did you have any luck with the FAIRY?\n\n";
 
-    delay(3000);
+            delay(2000);
 
-    std::cout
-        << "\n Speak with THE FAIRY, he will help you acquire a RUBY.\n\n";
+            std::cout
+                << " Excellent!\n Insert the RUBY into your SILVER KEY, and I will gladly let you pass.\n\n";
+        }
 
-    delay(2000);
+    public:
+        /* Talk to the Ancient Stone Door about leaving.
+         *
+         * Returns: Progress
+         *   The player's progress in the game.
+        */
+        Progress gameLoop(Progress game_progress) {
+            while (game_progress < Progress::HAVE_GEMMED_KEY) {
+                AncientStoneDoor::introduction();
+                game_progress = Progress::HAVE_GEMMED_KEY;
+            }
 
-    return Progress::HAVE_FORGED_KEY;
-}
-
-
-/* Prints dialogue with the ANCIENT STONE DOOR about
- * progress on collecting a ruby.
- *
- * Args:
- *   has_ruby: bool - Whether the player has a ruby.
- *
- * Returns: Progress
- *   The player's progress through the game.
-*/
-Progress metDoorDialogue(bool has_ruby) {
-    std::cout << "\nYou decide to return to the door.\n\n";
-
-    delay(3000);
-
-    std::cout
-        << "ANCIENT STONE DOOR:\n"
-        << " Welcome back traveller!\n"
-        << " Have you acquired a RUBY?\n\n";
-
-    delay(3000);
-
-    if (!has_ruby) {
-        std::cout
-            << " No? Well I suggest you speak with THE FAIRY again.\n"
-            << " I hope you have better luck this time.\n\n";
-
-        delay(3000);
-
-        return Progress::HAVE_FORGED_KEY;
-    }
-
-    else {
-        std::cout
-            << " Yes? Wonderful!\n"
-            << " Insert it into your SILVER KEY, and I will gladly let you go.\n\n";
-
-        delay(3000);
-
-        return Progress::HAVE_GEMMED_KEY;
-    }
-}
-
-
-/* Prints appropriate dialoge with the ANCIENT STONE DOOR
- * about the player's progress.
- *
- * Args:
- *   met_door: bool - Whether the player has spoken to the door before.
- *   game_progress: Progress - The player's progress through the game.
- *
- * Returns: Progress
- *   The player's progress through the game.
-*/
-Progress speakWithDoor(bool met_door, Progress game_progress) {
-    if (!met_door) {
-        return notMetDoorDialogue();
-    }
-
-    else if (met_door && game_progress < Progress::HAVE_RUBY) {
-        return metDoorDialogue(false);
-    }
-
-    else {
-        return metDoorDialogue(true);
-    }
-}
+            return game_progress;
+        }
+};

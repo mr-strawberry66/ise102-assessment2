@@ -23,7 +23,6 @@ int randomInRange(int min, int max)
 {
     int difference = max - min;
     int rand_in_range = min + (rand() % (difference+1));
-    // send back the result.
     return rand_in_range;
 }
 
@@ -181,17 +180,19 @@ std::string getRedGemNameByNumber(int index) {
 int countWordsInString(std::string input)
 {
     int word_count = 0;
-    bool in_word = false;
+    bool currently_in_word = false;
 
     // Itterate over each character in the string
     // if the character is a space, we are not in a word.
     // else, we are in a word and should increment the word count.
     for (char c : input) {
         if (c == ' ') {
-            in_word = false;
-        } else if (!in_word) {
+            currently_in_word = false;
+        }
+
+        else if (!currently_in_word) {
             word_count ++;
-            in_word = true;
+            currently_in_word = true;
         }
     }
 
