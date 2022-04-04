@@ -17,16 +17,16 @@
   - Simple use of containers - the vector (if we get there)
  
 -------------------------------------------------------------
+
 ## What To Do
-  
-  - Fix the broken functions
-  - Look for the todos in main for remaining encounters/features
-    that are needed
-  - Look for other todos for functions that need to be created
-    or completed
-  - Format the creature dialogue using fmt's prints' styles
-  - Use colour/style elsewhere to communicate the player's situation,
-    their choices.
+| Item | Status |
+|------|-------|
+| Fix the broken functions | ✔️ |
+| Look for the todos in main for remaining encounters/features that are needed | ✔️ |
+| Look for other todos for functions that need to be created or completed | ✔️ |
+| Format the creature dialogue using fmt's prints' styles | ❌ |
+| Use colour/style elsewhere to communicate the player's situation, their choices.| ❌ |
+
 -------------------------------------------------------------
 
 ## Questions
