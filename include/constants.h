@@ -31,11 +31,18 @@ enum RedGem {
 };
 
 // We'll talk about this one later
-enum TextStyle {
-    TROLL = 0,
-    STONE_DOOR,
-    END_CHARACTERS
-};
+// enum TextStyle {
+//     TROLL = fmt::emphasis::bold | fg(fmt::color::purple),
+//     SPHINX = fmt::emphasis::bold | fg(fmt::color::gold),
+//     BLACKSMITH = fmt::emphasis::bold | fg(fmt::color::teal),
+//     FAIRY = fmt::emphasis::bold | fg(fmt::color::pink),
+//     ANCIENT_DOOR = fmt::emphasis::bold | fg(fmt::color::rosy_brown),
+//     BAD_EVENT = fmt::emphasis::italic | fg(fmt::color::orange),
+//     GOOD_EVENT = fmt::emphasis::italic | fg(fmt::color::green),
+//     GAME_OVER = fmt::emphasis::bold | fg(fmt::color::red),
+//     CHAPTER = fmt::emphasis::bold | fg(fmt::color::green_yellow),
+// };
+
 
 // Collection of text stylers that can be used with the fmt::print
 // command to pretty up text.

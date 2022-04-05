@@ -4,6 +4,8 @@
 #include "../constants.h"
 #include "../ise102.h"
 
+#include "../fmt/format.h"
+
 
 class Fairy : public Creature {
     private:
@@ -12,7 +14,10 @@ class Fairy : public Creature {
          * Returns: void
         */
         void introduction() {
-            std::cout << "Chapter 4: The Fairy\n\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::green_yellow),
+                "Chapter 4: The Fairy\n\n\n"
+            );
 
             delay(1500);
 
@@ -21,20 +26,17 @@ class Fairy : public Creature {
 
             delay(2000);
 
-            std::cout
-                << "ANCIENT STONE DOOR:\n"
-                << " Hello traveller, I see you are trying to return to the forest.\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::rosy_brown),
+                "ANCIENT STONE DOOR:\n Hello traveller, I see you are trying to return to the forest.\n"
+            );
 
             delay(3000);
 
-            std::cout
-                << " I am afraid I cannot let you pass.\n"
-                << " The key you possess does not contain a RUBY!\n";
-
-            delay(3000);
-
-            std::cout
-                << "\n Speak with THE FAIRY, he will help you acquire a RUBY.\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::rosy_brown),
+                " I am afraid I cannot let you pass.\n The key you possess does not contain a RUBY!\n\n Speak with THE FAIRY, he will help you acquire a RUBY.\n\n"
+            );
 
             delay(2000);
 
@@ -47,14 +49,17 @@ class Fairy : public Creature {
 
             delay(2500);
 
-            std::cout << "You spot the FAIRY!\n\n";
+            fmt::print(
+                fmt::emphasis::italic | fg(fmt::color::green),
+                "You spot the FAIRY!\n\n"
+            );
 
             delay(3000);
 
-            std::cout
-                << "FAIRY:\n"
-                << " Hello there! Would you like to play a game?\n"
-                << " If you win, I'll give you one RED GEM!\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::pink),
+                "FAIRY:\n Hello there! Would you like to play a game?\n If you win, I'll give you one RED GEM!\n\n"
+            );
         }
 
         /* Return a message about the player dying to the Fairy.
@@ -82,19 +87,40 @@ class Fairy : public Creature {
 
             delay(2000);
 
-            std::cout << "\n Great! I'm thinking of a number between 1 and 10.\n";
-            std::cout << " You have " << guess_limit << " guesses.\n";
+
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::pink),
+                fmt::format("\n Great! I'm thinking of a number between 1 and 10.\n You have {} guesses.\n", guess_limit)
+            );
 
             while (guess_count < guess_limit) {
-                std::cout << " Your guess?\n > ";
+                fmt::print(
+                    fmt::emphasis::bold | fg(fmt::color::pink),
+                    " Your guess?\n > "
+                );
+
                 std::cin >> guess;
 
                 if (guess < number) {
-                    std::cout << "\n Hmmm, too low.\n";
-                } else if (guess > number) {
-                    std::cout << "\n Almost, you're too high.\n";
-                } else {
-                    std::cout << "\n You got it!\n\n";
+                    fmt::print(
+                        fmt::emphasis::bold | fg(fmt::color::pink),
+                        "\n Hmmm, too low.\n"
+                    );
+
+                }
+
+                else if (guess > number) {
+                    fmt::print(
+                        fmt::emphasis::bold | fg(fmt::color::pink),
+                        "\n Almost, you're too high.\n"
+                    );
+                }
+
+                else {
+                    fmt::print(
+                        fmt::emphasis::bold | fg(fmt::color::pink),
+                        "\n You got it!\n\n"
+                    );
 
                     delay(2000);
 
@@ -104,7 +130,10 @@ class Fairy : public Creature {
                 guess_count ++;
             }
 
-            std::cout << " You ran out of guesses.\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::pink),
+                " You're out of guesses.\n\n"
+            );
 
             delay(2000);
 
@@ -150,25 +179,30 @@ class Fairy : public Creature {
             bool success = Fairy::guessNumber();
 
             if (!success) {
-                std::cout
-                    << "FAIRY:\n"
-                    << " Unlucky...\n Let's play again!\n\n";
-                    delay(1000);
-                    game_progress = Fairy::playGame(game_progress);
+                fmt::print(
+                    fmt::emphasis::bold | fg(fmt::color::pink),
+                    "FAIRY:\n  Unlucky...\n Let's play again!\n\n"
+                );
+
+                delay(1000);
+                game_progress = Fairy::playGame(game_progress);
             }
 
             else {
-                std::cout
-                    << "FAIRY:\n"
-                    << " Congratulations!\n"
-                    << " Take a gem from this bag!\n\n";
+                fmt::print(
+                    fmt::emphasis::bold | fg(fmt::color::pink),
+                    "FAIRY:\n Congratulations!\n Take a gem from this bag!\n\n"
+                );
 
                 delay(3000);
 
                 RedGem gem = Fairy::take_gem();
 
                 if (gem == RedGem::RUBY) {
-                    std::cout << "\nYou have acquired a RUBY!\n\n";
+                    fmt::print(
+                        fmt::emphasis::italic | fg(fmt::color::green),
+                        "\nYou have acquired a RUBY!\n\n"
+                    );
 
                     delay(3000);
 
@@ -176,9 +210,10 @@ class Fairy : public Creature {
                 }
 
                 else {
-                    std::cout
-                        << "FAIRY:\n"
-                        << " Looks like that isn't a RUBY. Let's play again.\n";
+                    fmt::print(
+                    fmt::emphasis::bold | fg(fmt::color::pink),
+                        "FAIRY:\n Looks like that isn't a RUBY. Let's play again.\n"
+                    );
 
                     delay(1000);
 
@@ -217,7 +252,10 @@ class Fairy : public Creature {
                 }
 
                 else {
-                    std::cout << " That's a shame...\n\n";
+                    fmt::print(
+                        fmt::emphasis::bold | fg(fmt::color::pink),
+                        " That's a shame...\n\n"
+                    );
 
                     delay(3000);
 

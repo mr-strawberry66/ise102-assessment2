@@ -4,6 +4,8 @@
 #include "../constants.h"
 #include "../ise102.h"
 
+#include "../fmt/format.h"
+
 
 class AncientStoneDoor : public Creature {
     private:
@@ -12,7 +14,10 @@ class AncientStoneDoor : public Creature {
          * Returns: void
          */
         void introduction() {
-            std::cout << "Chapter 5: The Escape.\n\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::green_yellow),
+                "Chapter 5: The Escape.\n\n\n"
+            );
 
             delay(2000);
 
@@ -21,14 +26,17 @@ class AncientStoneDoor : public Creature {
 
             delay(3000);
 
-            std::cout
-                << "ANCIENT STONE DOOR:\n"
-                << " Welcome back traveller. Did you have any luck with the FAIRY?\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::rosy_brown),
+                "ANCIENT STONE DOOR:\n Welcome back traveller. Did you have any luck with the FAIRY?\n\n"
+            );
 
             delay(2000);
 
-            std::cout
-                << " Excellent!\n Insert the RUBY into your SILVER KEY, and I will gladly let you pass.\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::rosy_brown),
+                " Excellent!\n Insert the RUBY into your SILVER KEY, and I will gladly let you pass.\n\n"
+            );
         }
 
     public:

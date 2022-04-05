@@ -4,6 +4,7 @@
 
 #include "../constants.h"
 #include "../ise102.h"
+#include "../fmt/format.h"
 
 
 class Sphinx : public Creature {
@@ -28,11 +29,10 @@ class Sphinx : public Creature {
 
             delay(3000);
 
-            std::cout
-                << "SPHINX:\n Greetings, traveller.\n"
-                << " I understand you are in need of a SILVER KEY.\n"
-                << " I can direct you to THE BLACKSMITH. She will forge you a SILVER KEY.\n\n"
-                << " HOWEVER. In order to pass, you must answer my riddle.\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::gold),
+                "SPHINX:\n Greetings, traveller.\n I understand you are in need of a SILVER KEY.\n I can direct you to THE BLACKSMITH. She will forge you a SILVER KEY.\n HOWEVER. In order to pass, you must answer my riddle.\n\n"
+            );
         }
 
         /* Return a message about the player dying to the Sphinx.
@@ -50,24 +50,28 @@ class Sphinx : public Creature {
         *   True if the player successfully answers the riddle.
         */
         bool riddleSuccess() {
-            std::cout
-            << "SPHINX:\n"
-            << " What has many teeth, but cannot bite?\n\n"
-            << " > ";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::gold),
+                "SPHINX:\n What has many teeth, but cannot bite?\n\n > "
+            );
 
             std::string answer;
             std::ws(std::cin);
             std::getline(std::cin, answer);
 
             if (toUpperCase(answer) == "COMB" || toUpperCase(answer) == "A COMB") {
-                std::cout
-                    << " You have answered correctly.\n"
-                    << " You may pass.\n\n";
+                fmt::print(
+                    fmt::emphasis::bold | fg(fmt::color::gold),
+                    " You have answered correctly.\n You may pass.\n\n"
+                );
 
                 return true;
             }
 
-            std::cout << " You have answered incorrectly.\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::gold),
+                " You have answered incorrectly.\n\n"
+            );
             return false;
         }
 
@@ -126,18 +130,16 @@ class Sphinx : public Creature {
         */
         Progress findBlacksmith(Progress game_progress) {
 
-            std::cout
-                << "SPHINX:\n"
-                << " To find the BLACKSMITH, you need to leave this room through the door to your right.\n"
-                << " These tunnels are long and winding, it is easy to get lost. So listen carefully.\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::gold),
+                "SPHINX:\n To find the BLACKSMITH, you need to leave this room through the door to your right.\n These tunnels are long and winding, it is easy to get lost. So listen carefully.\n\n"
+            );
 
             while (game_progress < Progress::FOUND_BLACKSMITH) {
-                std::cout
-                    << " First follow the tunnel UP.\n"
-                    << " Take the first LEFT.\n"
-                    << " Then the next LEFT you see after that.\n"
-                    << " Follow that path UP for a while.\n"
-                    << " Finally, take a RIGHT.\n\n";
+                fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::gold),
+                    " First follow the tunnel UP.\n Take the first LEFT.\n Then the next LEFT you see after that.\n Follow that path UP for a while.\n Finally, take a RIGHT.\n\n"
+                );
 
                 delay(3000);
 
@@ -146,10 +148,10 @@ class Sphinx : public Creature {
                 }
 
                 else {
-                    std::cout
-                        << "SPHINX:\n"
-                        << " Ahh, you're back...\n"
-                        << " Allow me to repeat the directions for you.\n\n";
+                    fmt::print(
+                        fmt::emphasis::bold | fg(fmt::color::gold),
+                        "SPHINX:\n Ahh, you're back...\n Allow me to repeat the directions for you.\n\n"
+                    );
                 }
             }
             return game_progress;

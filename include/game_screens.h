@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "fmt/format.h"
 #include "constants.h"
 #include "ise102.h"
 
@@ -28,8 +29,15 @@ void displayTitle()
  * Returns: void
 */
 void displayGameOver(std::string message) {
-    std::cout << message << "\n\n\n";
-    std::cout << ("++ Game over ++\n\n");
+    fmt::print(
+        fmt::emphasis::italic | fg(fmt::color::orange),
+        message + "\n\n\n"
+    );
+
+    fmt::print(
+        fmt::emphasis::bold | fg(fmt::color::red),
+        "++ Game over ++\n\n"
+    );
 }
 
 

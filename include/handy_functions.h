@@ -22,7 +22,7 @@
 int randomInRange(int min, int max)
 {
     int difference = max - min;
-    int rand_in_range = min + (rand() % (difference+1));
+    int rand_in_range = min + (rand() % (difference + 1));
     return rand_in_range;
 }
 
@@ -164,7 +164,7 @@ std::string getRedGemNameByNumber(int index) {
         case 3: return "TOURMALINE";
         case 4: return "RHODOLITE";
         case 5: return "SPINEL";
-        default: return "UNIDENTIFIED_RED_GEM";
+        default: return "UNIDENTIFIED RED GEM";
     }
 }
 

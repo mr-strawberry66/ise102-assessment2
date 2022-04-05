@@ -3,6 +3,7 @@
 
 #include "../constants.h"
 #include "../ise102.h"
+#include "../fmt/format.h"
 
 
 class Troll : public Creature {
@@ -44,13 +45,22 @@ class Troll : public Creature {
          *   If the player survived or not.
         */
         bool surviveTrollEncounter(bool already_met) {
-            std::cout << "MINE TROLL: \n ";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::purple),
+                "MINE TROLL: \n "
+            );
             if (already_met == false) {
-                std::cout << "G'day human. You need to make a SILVER KEY to escape. Take this EXCELLENT PICKAXE and head to the mines. Come back when you have some ORE OF SILVER.\n\n";
+                fmt::print(
+                    fmt::emphasis::bold | fg(fmt::color::purple),
+                    "G'day human. You need to make a SILVER KEY to escape. Take this EXCELLENT PICKAXE and head to the mines. Come back when you have some ORE OF SILVER.\n\n"
+                );
             }
 
             else {
-                std::cout << "What are you doing back out here? No silver, no key!\n\n";
+                fmt::print(
+                    fmt::emphasis::bold | fg(fmt::color::purple),
+                    "What are you doing back out here? No silver, no key!\n\n"
+                );
             }
 
             std::cout << "Do you SPIT on the disgusting troll, or take the pickaxe and go to the MINE?\n";
@@ -59,7 +69,10 @@ class Troll : public Creature {
 
             if (choice == "MINE") return true;
 
-            std::cout << "\nThe troll, you discover, is awfully savage for her height.\n\n";
+            fmt::print(
+                fmt::emphasis::italic | fg(fmt::color::orange),
+                "\nThe troll, you discover, is awfully savage for her height.\n\n"
+            );
             return false;
         }
 
@@ -79,7 +92,10 @@ class Troll : public Creature {
             int found = randomInRange(1,3);
 
             if (found == SILVER) {
-                std::cout << "Hooray, you found SILVER ORE.\n\n";
+                fmt::print(
+                    fmt::emphasis::italic | fg(fmt::color::green),
+                    "Hooray, you found SILVER ORE.\n\n"
+                );
                 std::cout << "Having found the SILVER ORE, the troll directs you to a small room.\n\n";
                 silver_progress = Progress::HAVE_SILVER_ORE;
             }

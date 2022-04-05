@@ -4,6 +4,7 @@
 #include "../constants.h"
 #include "../ise102.h"
 
+#include "../fmt/format.h"
 
 class Blacksmith : public Creature {
     private:
@@ -12,7 +13,10 @@ class Blacksmith : public Creature {
         * Returns: void
         */
         void introduction() {
-            std::cout << "Chapter 3: The Forge.\n\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::green_yellow),
+                "Chapter 3: The Forge.\n\n\n"
+            );
 
             delay(1500);
 
@@ -52,37 +56,36 @@ class Blacksmith : public Creature {
         */
         Progress validateName(std::string name, int word_count) {
             std::string validation_message = "";
+            Progress game_progress;
 
             if (name.length() < 20) {
-                std::cout << Blacksmith::validateNameMessage("not long enough");
-                    return Progress::HAVE_SILVER_ORE;
+                validation_message = Blacksmith::validateNameMessage("not long enough");
+                game_progress = Progress::HAVE_SILVER_ORE;
             }
 
             else if (name.length() > 20) {
-                std::cout << Blacksmith::validateNameMessage("too long");
-                    return Progress::HAVE_SILVER_ORE;
+                validation_message = Blacksmith::validateNameMessage("too long");
+                game_progress = Progress::HAVE_SILVER_ORE;
             }
 
             if (word_count < 3) {
-                std::cout << Blacksmith::validateNameMessage("too few words");
-                    return Progress::HAVE_SILVER_ORE;
+                validation_message = Blacksmith::validateNameMessage("too few words");
+                game_progress = Progress::HAVE_SILVER_ORE;
             }
 
             else if (word_count > 3) {
-                std::cout << Blacksmith::validateNameMessage("too many words");
-                    return Progress::HAVE_SILVER_ORE;
+                validation_message = Blacksmith::validateNameMessage("too many words");
+                game_progress = Progress::HAVE_SILVER_ORE;
             }
             else {
-                std::cout
-                    << "THE BLACKSMITH:\n"
-                    << " HA HA HA! Well done!\n"
-                    << " Here, I will forge you the key.\n\n";
-
-                delay(3000);
-
-                std::cout << "You have acquired the SILVER KEY!\n\n";
-                return Progress::HAVE_FORGED_KEY;
+                validation_message = "THE BLACKSMITH:\n HA HA HA! Well done!\n Here, I will forge you the key.\n\n";
+                game_progress = Progress::HAVE_FORGED_KEY;
             }
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::teal),
+                validation_message
+            );
+            return game_progress;
         }
 
         /* Play the blacksmith's minigame.
@@ -98,21 +101,22 @@ class Blacksmith : public Creature {
         */
         Progress miniGame(bool met_blacksmith) {
             if (!met_blacksmith) {
-                std::cout
-                    << "THE BLACKSMITH:\n"
-                    << " Hello traveller! I am THE BLACKSMITH.\n"
-                    << " I can forge you a SILVER KEY, but in return, I require something from you.\n\n";
+                fmt::print(
+                    fmt::emphasis::bold | fg(fmt::color::teal),
+                    "THE BLACKSMITH:\n Hello traveller! I am THE BLACKSMITH.\n I can forge you a SILVER KEY, but in return, I require something from you.\n\n"
+                );
 
                 delay(1000);
             }
 
-            std::cout
-                << " Tell me a funny name for your SILVER KEY.\n"
-                << " This name must be three words long, and, it must be EXACTLY 20 characters long.\n\n";
+            fmt::print(
+                fmt::emphasis::bold | fg(fmt::color::teal),
+                " Tell me a funny name for your SILVER KEY.\n This name must be three words long, and, it must be EXACTLY 20 characters long.\n\n"
+            );
 
             std::string name = "";
 
-            std::cout << "Tell me a name.\n" << " > ";
+            std::cout << "Choose a name.\n" << " > ";
             std::ws(std::cin);
             std::getline(std::cin, name);
 
@@ -120,7 +124,16 @@ class Blacksmith : public Creature {
 
             int word_count = countWordsInString(name);
 
-            return Blacksmith::validateName(name, word_count);
+            Progress game_progress = Blacksmith::validateName(name, word_count);
+
+            if (game_progress == Progress::HAVE_FORGED_KEY) {
+                fmt::print(
+                    fmt::emphasis::italic | fg(fmt::color::green),
+                    "You have acquired the SILVER KEY!\n\n"
+                );
+            }
+
+            return game_progress;
         }
 
     public:
