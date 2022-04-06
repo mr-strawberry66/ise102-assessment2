@@ -1,8 +1,11 @@
 #include <iostream>
 #include <string>
-#include "fmt/format.h"
+
 #include "constants.h"
 #include "ise102.h"
+#include "handy_functions.h"
+
+#include "fmt/format.h"
 
 
 /* Display the game title screen.
@@ -46,18 +49,18 @@ void displayGameOver(std::string message) {
  * Returns: void
 */
 void displayGameComplete() {
-    std::cout 
+    std::cout
         << "The door's face becomes inanimate as it slowly "
         << "creaks open, revealing a winding staircase.\n\n";
 
-    std::cout 
+    std::cout
         << "As you traverse the mossy, derelict stairs, "
         << "the structure slowly fades into a far more "
         << "natural looking cave.\n\n";
 
     delay(3000);
 
-    std::cout 
+    std::cout
         << "The smell of the the forest becomes "
         << "apparent as you continue to ascend...\n\n";
 
@@ -81,10 +84,10 @@ Progress getPlayerProgress() {
     std::string str_choice;
     int choice;
     bool valid_number = false;
-   
-    // Collect the user's input. If the 
+
+    // Collect the user's input. If the
     // input is a valid integer, their
-    // choice will be evaluated by the 
+    // choice will be evaluated by the
     // switch statement. If not, the error
     // is caught and the user is warned to
     // input a valid integer.
@@ -98,22 +101,23 @@ Progress getPlayerProgress() {
             << "4. Chapter 4: The Fairy.\n"
             << "5. Chapter 5: The Escape.\n"
             << "> ";
-        try {
-            std::ws(std::cin);
-            std::getline(std::cin, str_choice);
-            
+
+        std::ws(std::cin);
+        std::getline(std::cin, str_choice);
+
+        if (canParseInt(str_choice)) {
             choice = std::stoi(str_choice);
             valid_number = true;
         }
-    
-        catch (...) {
+
+        else {
             fmt::print(
                 fmt::emphasis::bold | fg(fmt::color::red),
                 "\nThat is not a valid number.\n\n"
             );
         }
     }
-    
+
     switch (choice) {
         case 1: return Progress::NO_PROGRESS;
         case 2: return Progress::HAVE_SILVER_ORE;

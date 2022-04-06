@@ -1,4 +1,5 @@
 #include <string>
+
 #include "../constants.h"
 
 
@@ -7,7 +8,7 @@
 */
 class Creature {
     public:
-        /* Play the creature's game loop.
+        /* Virtual method to play the child creature's game loop.
          *
          * Returns: Progress
          *   The player's progress

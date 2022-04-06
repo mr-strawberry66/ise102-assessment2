@@ -93,7 +93,7 @@ class Blacksmith : public Creature {
         * The blacksmith asks the player for a name, and the
         * player must provide one that meets certain parameters.
         *
-        * Args:
+        * Params:
         *   met_blacksmith: bool - Whether or not the player has met the blacksmith.
         *
         * Returns: Progress

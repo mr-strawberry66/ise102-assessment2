@@ -1,6 +1,6 @@
 /* ISE102 - Assessment 2: Adventure.
- * 
- * Code extended and refactored 
+ *
+ * Code extended and refactored
  * by Sam Kenney - 2022
 */
 #include <iostream>
@@ -9,7 +9,6 @@
 
 #include "include/constants.h"
 #include "include/game_screens.h"
-#include "include/handy_functions.h"
 #include "include/ise102.h"
 
 #include "include/minigames/creature.h"
@@ -30,7 +29,7 @@ int main() {
     // within this program.
     srand(time(0));
 
-    // Initialise each creature and 
+    // Initialise each creature and
     // add them to a std::vector.
     Troll troll;
     Sphinx sphinx;

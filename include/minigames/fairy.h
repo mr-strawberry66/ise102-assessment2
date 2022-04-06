@@ -97,28 +97,36 @@ class Fairy : public Creature {
 
             while (guess_count < guess_limit) {
 
+                // Test to see if the player's guess is actually
+                // a number. If not, get another input from them.
                 while (!valid_guess) {
-                    try {
-                        fmt::print(
-                            fmt::emphasis::bold | fg(fmt::color::pink),
-                            " Your guess?\n > "
-                        );
+                    fmt::print(
+                        fmt::emphasis::bold | fg(fmt::color::pink),
+                        " Your guess?\n > "
+                    );
 
-                        std::ws(std::cin);
-                        std::getline(std::cin, str_guess);
+                    std::ws(std::cin);
+                    std::getline(std::cin, str_guess);
+
+                    if (canParseInt(str_guess)) {
                         guess = std::stoi(str_guess);
                         valid_guess = true;
                     }
 
-                    catch (...) {
+                    else {
                         fmt::print(
                             fmt::emphasis::bold | fg(fmt::color::pink),
                             "\n HEY! That's not a number.\n\n"
                         );
                     }
                 }
-                
 
+                valid_guess = false;
+
+
+                // Check to see if the player's guess is correct.
+                // If it isn't, give them a clue as to whether their
+                // guess is too high or too low.
                 if (guess < number) {
                     fmt::print(
                         fmt::emphasis::bold | fg(fmt::color::pink),
@@ -177,6 +185,7 @@ class Fairy : public Creature {
 
             delay(3000);
 
+            // Check the gem name to see if we should use "a" or "an".
             std::string a_an = (gem_number != 0) ? " a " : " an ";
 
             std::cout << "It's" << a_an << getRedGemNameByNumber(gem_number) << "!\n\n";
@@ -196,6 +205,8 @@ class Fairy : public Creature {
         Progress playGame(Progress game_progress) {
             bool success = Fairy::guessNumber();
 
+            // Check if the player won the guessing game.
+            // If not, play the game again.
             if (!success) {
                 fmt::print(
                     fmt::emphasis::bold | fg(fmt::color::pink),
@@ -216,6 +227,8 @@ class Fairy : public Creature {
 
                 RedGem gem = Fairy::take_gem();
 
+                // Check which gem the player recieves
+                // If not a RUBY, play again.
                 if (gem == RedGem::RUBY) {
                     fmt::print(
                         fmt::emphasis::italic | fg(fmt::color::green),
@@ -263,6 +276,8 @@ class Fairy : public Creature {
                     met_fairy = true;
                 }
 
+                // If player chooses not to play the game
+                // show game over screen.
                 std::string choice = getPlayerChoice("YES", "NO");
 
                 if (choice == "YES") {

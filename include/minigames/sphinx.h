@@ -59,6 +59,9 @@ class Sphinx : public Creature {
             std::ws(std::cin);
             std::getline(std::cin, answer);
 
+            // If the player answers correctly (COMB or A COMB)
+            // they can progress. Otherwise show the game over
+            // screen.
             if (toUpperCase(answer) == "COMB" || toUpperCase(answer) == "A COMB") {
                 fmt::print(
                     fmt::emphasis::bold | fg(fmt::color::gold),
@@ -89,6 +92,10 @@ class Sphinx : public Creature {
                 "RIGHT",
             };
 
+            // Itterate over the set of directions and
+            // ask which way the player wants to go.
+            // If they make a mistake, they end up at
+            // the sphinx again and have to try again.
             for (std::string direction : directions) {
                 std::cout
                     << "Which direction will you go?\n\n"

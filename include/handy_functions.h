@@ -198,3 +198,14 @@ int countWordsInString(std::string input)
 
     return word_count;
 }
+
+
+bool canParseInt(std::string input) {
+    try {
+        std::stoi(input);
+        return true;
+    }
+    catch (...) {
+        return false;
+    }
+}

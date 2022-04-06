@@ -89,8 +89,10 @@ class Troll : public Creature {
             const int SILVER = 3;
 
             Progress silver_progress = Progress::NO_PROGRESS;
+            // 1 in 3 chance of mining Silver.
             int found = randomInRange(1,3);
 
+            // Check which ore has been found.
             if (found == SILVER) {
                 fmt::print(
                     fmt::emphasis::italic | fg(fmt::color::green),
