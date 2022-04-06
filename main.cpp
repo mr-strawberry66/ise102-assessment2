@@ -1,9 +1,7 @@
-/*
-* What To Do
-*
-* - Format the creature dialogue using fmt's prints' styles
-* - Use colour/style elsewhere to communicate the player's situation,
-*   their choices.
+/* ISE102 - Assessment 2: Adventure.
+ * 
+ * Code extended and refactored 
+ * by Sam Kenney - 2022
 */
 #include <iostream>
 #include <string>
@@ -23,9 +21,17 @@
 #include "include/minigames/troll.h"
 
 
+/* Entry point for code.
+ *
+ * Main game loop.
+*/
 int main() {
+    // Set a seed for randoms generated
+    // within this program.
     srand(time(0));
 
+    // Initialise each creature and 
+    // add them to a std::vector.
     Troll troll;
     Sphinx sphinx;
     Blacksmith blacksmith;
@@ -40,15 +46,23 @@ int main() {
     creatures.push_back(&fairy);
     creatures.push_back(&door);
 
+    // Ask where in the game the player
+    // would like to start from.
     Progress game_progress = getPlayerProgress();
 
     clearScreen();
     displayTitle();
 
+    // Itterate over each creature and
+    // start the appropriate game loop
+    // based on the player's starting
+    // point.
     for (auto creature : creatures) {
         game_progress = creature->gameLoop(game_progress);
     }
 
+    // If the player has succeeded, show
+    // the game complete text.
     if (game_progress != Progress::FAILED) {
         displayGameComplete();
         game_progress = Progress::COMPLETED_GAME;

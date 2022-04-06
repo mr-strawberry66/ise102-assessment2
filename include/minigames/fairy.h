@@ -81,6 +81,8 @@ class Fairy : public Creature {
         */
         bool guessNumber() {
             int number = randomInRange(1, 10);
+            bool valid_guess = false;
+            std::string str_guess;
             int guess;
             int guess_count = 0;
             int guess_limit = 5;
@@ -94,12 +96,28 @@ class Fairy : public Creature {
             );
 
             while (guess_count < guess_limit) {
-                fmt::print(
-                    fmt::emphasis::bold | fg(fmt::color::pink),
-                    " Your guess?\n > "
-                );
 
-                std::cin >> guess;
+                while (!valid_guess) {
+                    try {
+                        fmt::print(
+                            fmt::emphasis::bold | fg(fmt::color::pink),
+                            " Your guess?\n > "
+                        );
+
+                        std::ws(std::cin);
+                        std::getline(std::cin, str_guess);
+                        guess = std::stoi(str_guess);
+                        valid_guess = true;
+                    }
+
+                    catch (...) {
+                        fmt::print(
+                            fmt::emphasis::bold | fg(fmt::color::pink),
+                            "\n HEY! That's not a number.\n\n"
+                        );
+                    }
+                }
+                
 
                 if (guess < number) {
                     fmt::print(
