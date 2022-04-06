@@ -200,6 +200,14 @@ int countWordsInString(std::string input)
 }
 
 
+/* Test to see if a std::string value can be converted to an integer.
+ *
+ * Params:
+ *   input: std::string - The value to convert.
+ * 
+ * Returns: bool
+ *   Whether the input can be converted or not.
+*/
 bool canParseInt(std::string input) {
     try {
         std::stoi(input);
